@@ -56,7 +56,7 @@ class AcGameMenu{
         this.$menu.hide();
     }
 }
-let AC_GAME_OBJECTS = []
+let AC_GAME_OBJECTS = [];
 class AcGameObject {
             constructor(){
             AC_GAME_OBJECTS.push(this);
@@ -149,9 +149,9 @@ class Particle extends AcGameObject{
         this.x = x;
         this.y = y;
         this.radius = radius;
+        this.color = color;
         this.vx = vx;
         this.vy = vy;
-        this.color = color;
         this.speed = speed;
         this.move_length = move_length;
         this.friction = 0.9;
@@ -167,13 +167,12 @@ class Particle extends AcGameObject{
         if (this.move_length < this.eps || this.speed < this.eps){
             this.destroy();
             return false;
-
         }
         let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
         this.x += this.vx * moved;
         this.y += this.vy * moved;
-        this.move_length -= moved;
         this.speed *= this.friction;
+        this.move_length -= moved;
         this.render();
 
     }
@@ -230,7 +229,7 @@ class Player extends AcGameObject{
         let outer = this;
 
         this.playground.game_map.$canvas.on("contextmenu", function(){
-        return false;
+            return false;
         });
 
         this.playground.game_map.$canvas.mousedown(function(e) {
@@ -261,7 +260,7 @@ class Player extends AcGameObject{
         let vx = Math.cos(angle), vy = Math.sin(angle);
         let color = "orange";
         let speed = this.playground.height * 0.5;
-        let move_length = this.playground.height * 1.5;
+        let move_length = this.playground.height * 1;
         new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
 
 
@@ -359,23 +358,17 @@ class Player extends AcGameObject{
         this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
-
-
     }
 
-    on_destory(){
-        for (let i = 0; i < this.playground.length; i ++){
+    on_destroy() {
+        for (let i = 0; i < this.playground.players.length; i ++){
             if (this.playground.players[i] === this){
-                this.playground.players.splices(i, 1);
+                this.playground.players.splice(i, 1);
 
             }
         }
-
-
     }
-
 }
-
 class FireBall extends AcGameObject{
     constructor(playground, player, x, y, radius, vx, vy, color, speed, move_length, damage){
         super();
@@ -419,16 +412,16 @@ class FireBall extends AcGameObject{
 
         }
 
-        get_dist(x1, x2, y1, y2){
+        get_dist(x1, y1, x2, y2){
             let dx = x1 - x2;
             let dy = y1 - y2;
             return Math.sqrt(dx * dx + dy * dy);
 
         }
 
-        is_collision(obj){
-            let distance = this.get_dist(this.x, this.y, obj.x, obj.y);
-            if (distance < this.radius + obj.radius)
+        is_collision(player){
+            let distance = this.get_dist(this.x, this.y, player.x, player.y);
+            if (distance < this.radius + player.radius)
                 return true;
             return false;
 
@@ -440,8 +433,6 @@ class FireBall extends AcGameObject{
             this.destroy();
 
         }
-        
-        
 
         render(){
             this.ctx.beginPath();

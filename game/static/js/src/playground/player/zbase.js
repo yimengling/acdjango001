@@ -41,7 +41,7 @@ class Player extends AcGameObject{
         let outer = this;
 
         this.playground.game_map.$canvas.on("contextmenu", function(){
-        return false;
+            return false;
         });
 
         this.playground.game_map.$canvas.mousedown(function(e) {
@@ -72,7 +72,7 @@ class Player extends AcGameObject{
         let vx = Math.cos(angle), vy = Math.sin(angle);
         let color = "orange";
         let speed = this.playground.height * 0.5;
-        let move_length = this.playground.height * 1.5;
+        let move_length = this.playground.height * 1;
         new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
 
 
@@ -170,20 +170,14 @@ class Player extends AcGameObject{
         this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
-
-
     }
 
-    on_destory(){
-        for (let i = 0; i < this.playground.length; i ++){
+    on_destroy() {
+        for (let i = 0; i < this.playground.players.length; i ++){
             if (this.playground.players[i] === this){
-                this.playground.players.splices(i, 1);
+                this.playground.players.splice(i, 1);
 
             }
         }
-
-
     }
-
 }
-
