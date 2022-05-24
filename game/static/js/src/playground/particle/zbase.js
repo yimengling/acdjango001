@@ -1,5 +1,5 @@
 class Particle extends AcGameObject{
-    constructor(playground, x, y, radius, color, vx, vy, speed, move_length){
+    constructor(playground, x, y, radius, vx, vy, color, speed, move_length){
         super();
         this.playground = playground;
         this.ctx = this.playground.game_map.ctx;

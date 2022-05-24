@@ -54,6 +54,7 @@ class Player extends AcGameObject{
                     }
                     outer.cur_skill = null;
                 }
+            outer.cur_skill = null;
         });
 
         $(window).keydown(function(e){
@@ -70,7 +71,7 @@ class Player extends AcGameObject{
         let radius = this.playground.height * 0.01;
         let angle = Math.atan2(ty - this.y, tx - this.x);
         let vx = Math.cos(angle), vy = Math.sin(angle);
-        let color = "orange";
+        let color = "rgb(197, 204, 234)";
         let speed = this.playground.height * 0.5;
         let move_length = this.playground.height * 1;
         new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
@@ -96,7 +97,7 @@ class Player extends AcGameObject{
 
 
     is_attacked(angle, damage){
-        for (let i = 0; i < 20 + Math.random() * 10; i ++){
+        for (let i = 0; i < 180 + Math.random() * 50; i ++){
             let x = this.x, y = this.y;
             let radius = this.radius * Math.random() * 0.1;
             let angle = Math.PI * 2 * Math.random();

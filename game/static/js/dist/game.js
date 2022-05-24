@@ -142,7 +142,7 @@ class GameMap extends AcGameObject{
        }
 }
 class Particle extends AcGameObject{
-    constructor(playground, x, y, radius, color, vx, vy, speed, move_length){
+    constructor(playground, x, y, radius, vx, vy, color, speed, move_length){
         super();
         this.playground = playground;
         this.ctx = this.playground.game_map.ctx;
@@ -242,6 +242,7 @@ class Player extends AcGameObject{
                     }
                     outer.cur_skill = null;
                 }
+            outer.cur_skill = null;
         });
 
         $(window).keydown(function(e){
@@ -258,7 +259,7 @@ class Player extends AcGameObject{
         let radius = this.playground.height * 0.01;
         let angle = Math.atan2(ty - this.y, tx - this.x);
         let vx = Math.cos(angle), vy = Math.sin(angle);
-        let color = "orange";
+        let color = "rgb(197, 204, 234)";
         let speed = this.playground.height * 0.5;
         let move_length = this.playground.height * 1;
         new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
@@ -284,7 +285,7 @@ class Player extends AcGameObject{
 
 
     is_attacked(angle, damage){
-        for (let i = 0; i < 20 + Math.random() * 10; i ++){
+        for (let i = 0; i < 180 + Math.random() * 50; i ++){
             let x = this.x, y = this.y;
             let radius = this.radius * Math.random() * 0.1;
             let angle = Math.PI * 2 * Math.random();
@@ -465,9 +466,9 @@ class AcGamePlayground{
        this.height = this.$playground.height();
        this.game_map = new GameMap(this);
        this.players = [];
-       this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
+       this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "rgb(248, 223, 95)", this.height * 0.15, true));
 
-       for (let i = 0; i < 5; i ++ ){
+       for (let i = 0; i < 6; i ++ ){
             this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
 
        }
@@ -477,7 +478,7 @@ class AcGamePlayground{
     }
 
     get_random_color() {
-        let colors = ["blue", "red", "pink", "grey", "green"];
+        let colors = ["rgb(249, 182, 169)", "rgb(75, 162, 207)", "rgb(251, 241, 227)", "rgb(140, 177, 194)", "rgb(251, 194, 166)"];
         return colors[Math.floor(Math.random() * 5)];
     }
 
